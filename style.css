@@ -1,0 +1,211 @@
+:root {
+    color-scheme: light dark;
+    --text-main: #1d1d1f;
+    --text-muted: #86868b;
+    --primary: #000000;
+    
+    --chat-bg: #0a0a0a;
+    --chat-sidebar: #141414;
+    --chat-msg-right: #2d2d2d;
+    --chat-msg-left: #1a1a1a;
+    --chat-text: #f5f5f7;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: var(--text-main);
+    line-height: 1.5;
+    background-color: #fbfbfd;
+    overflow-x: hidden;
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+/* =========================================
+   АНИМИРОВАННЫЙ ФОН (Aurora)
+========================================= */
+.aurora-bg {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: -2; overflow: hidden; pointer-events: none;
+    background: #fbfbfd;
+}
+.blob {
+    position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.5;
+    animation: float 20s infinite alternate ease-in-out;
+}
+.blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: #e0c3fc; }
+.blob-2 { bottom: 10%; right: -20%; width: 60vw; height: 60vw; background: #8ec5fc; animation-delay: -5s; }
+.blob-3 { top: 30%; left: 40%; width: 40vw; height: 40vw; background: #c2e9fb; animation-delay: -10s; }
+
+@keyframes float {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(10%, 15%) scale(1.1); }
+}
+
+/* =========================================
+   ЖИДКОЕ СТЕКЛО (ОРИГИНАЛ С ВАШИМ FALLBACK)
+========================================= */
+.glass-surface {
+    position: fixed; top: 24px; left: 50%; transform: translateX(-50%);
+    width: calc(100% - 48px); max-width: 1100px; height: 76px;
+    border-radius: 50px; z-index: 1000;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; transition: opacity 0.26s ease-out;
+}
+.glass-surface__filter { width: 100%; height: 100%; pointer-events: none; position: absolute; inset: 0; opacity: 0; z-index: -1; }
+.glass-surface__content { width: 100%; height: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; border-radius: inherit; position: relative; z-index: 1; }
+
+.glass-surface--svg {
+    background: light-dark(hsl(0 0% 100% / 0.1), hsl(0 0% 0% / 0));
+    /* ВАЖНО: используем переменную --filter-url из HTML */
+    backdrop-filter: var(--filter-url) saturate(1.2);
+    -webkit-backdrop-filter: var(--filter-url) saturate(1.2);
+    box-shadow:
+        0 0 2px 1px light-dark(color-mix(in oklch, black, transparent 85%), color-mix(in oklch, white, transparent 65%)) inset,
+        0 0 10px 4px light-dark(color-mix(in oklch, black, transparent 90%), color-mix(in oklch, white, transparent 85%)) inset,
+        0px 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* Fallback из вашего React кода для Safari/Firefox */
+.glass-surface--fallback {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(12px) saturate(1.8) brightness(1.1);
+    -webkit-backdrop-filter: blur(12px) saturate(1.8) brightness(1.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow:
+      0 8px 32px 0 rgba(31, 38, 135, 0.2),
+      0 2px 16px 0 rgba(31, 38, 135, 0.1),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.4),
+      inset 0 -1px 0 0 rgba(255, 255, 255, 0.2);
+}
+@media (prefers-color-scheme: dark) {
+    .glass-surface--fallback {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px) saturate(1.8) brightness(1.2);
+        -webkit-backdrop-filter: blur(12px) saturate(1.8) brightness(1.2);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 0 rgba(255, 255, 255, 0.1);
+    }
+}
+
+.logo { 
+    background-color: var(--primary); color: #ffffff;
+    padding: 6px 16px; border-radius: 12px;
+    font-size: 18px; font-weight: 700; letter-spacing: 1px; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.nav-links a { text-decoration: none; color: var(--text-main); font-weight: 500; font-size: 15px; margin-left: 36px; transition: opacity 0.3s ease; }
+.nav-links a:hover { opacity: 0.6; }
+
+/* =========================================
+   ОСТАЛЬНОЙ САЙТ
+========================================= */
+.hero { padding-top: 220px; padding-bottom: 120px; text-align: center; }
+.hero-badge { display: inline-block; padding: 8px 16px; background: rgba(0,0,0,0.05); border-radius: 100px; font-size: 14px; font-weight: 600; margin-bottom: 24px; backdrop-filter: blur(10px); }
+.hero h1 { font-size: 72px; font-weight: 700; margin-bottom: 24px; letter-spacing: -2.5px; line-height: 1.1; }
+.hero p { font-size: 20px; color: var(--text-muted); max-width: 500px; margin: 0 auto; letter-spacing: -0.3px; }
+
+/* =========================================
+   СЕКЦИЯ СКРОЛЛА
+========================================= */
+.scroll-presentation { display: flex; align-items: flex-start; gap: 80px; padding: 80px 20px 180px; position: relative; }
+.scroll-text { flex: 1; padding-top: 50px; }
+.feature-block { min-height: 65vh; display: flex; flex-direction: column; justify-content: center; opacity: 0.2; transform: translateX(-20px); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+.feature-block.active { opacity: 1; transform: translateX(0); }
+.feature-block h2 { font-size: 40px; margin-bottom: 16px; letter-spacing: -1px; }
+.feature-block p { font-size: 20px; color: var(--text-muted); line-height: 1.6; }
+
+.scroll-visual { flex: 1; position: sticky; top: 140px; height: 650px; perspective: 1000px; }
+.chat-mockup { 
+    background-color: var(--chat-bg); border-radius: 24px; 
+    height: 100%; width: 100%; color: var(--chat-text);
+    box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255,255,255,0.1); 
+    display: flex; flex-direction: column; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);
+}
+.chat-mac-dots { padding: 16px 20px 0; display: flex; gap: 8px; background: var(--chat-sidebar); }
+.chat-mac-dots span { width: 12px; height: 12px; border-radius: 50%; background: #333; }
+.chat-header { background-color: var(--chat-sidebar); padding: 16px 20px; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.chat-name { font-weight: 600; font-size: 16px; letter-spacing: -0.3px;}
+.chat-status { font-size: 13px; color: #737373; }
+.chat-body { padding: 24px; flex: 1; display: flex; flex-direction: column; gap: 20px; }
+
+.avatar-circle { background: #fff; color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+.header-avatar { width: 44px; height: 44px; font-size: 18px; }
+.small-avatar { width: 36px; height: 36px; font-size: 14px; flex-shrink: 0; }
+
+.msg-row { display: flex; gap: 12px; align-items: flex-end; opacity: 0; transform: translateY(20px); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+.msg-row.show { opacity: 1; transform: translateY(0); }
+.msg-row.left { align-self: flex-start; }
+.msg-row.right { align-self: flex-end; flex-direction: row-reverse; }
+.msg-row .msg { max-width: 85%; padding: 14px 18px; font-size: 15px; line-height: 1.5; letter-spacing: -0.2px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.msg-row.left .msg { background-color: var(--chat-msg-left); border-radius: 16px 16px 16px 4px; }
+.msg-row.right .msg { background-color: var(--chat-msg-right); border-radius: 16px 16px 4px 16px; }
+
+/* =========================================
+   ПРЕИМУЩЕСТВА И БЕНТО СЕТКА
+========================================= */
+.advantages-section { padding: 80px 0; position: relative; z-index: 1;}
+.text-center { text-align: center; margin-bottom: 80px; font-size: 48px; letter-spacing: -1.5px; }
+.advantages-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; }
+
+.adv-card, .bento-item { 
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+    border-radius: 32px; border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255,255,255,0.8);
+    transition: transform 0.4s ease;
+}
+.adv-card { padding: 48px 40px; text-align: center; }
+.adv-card:hover { transform: translateY(-8px); }
+.adv-card h3 { font-size: 24px; margin-bottom: 16px; letter-spacing: -0.5px; }
+.adv-card p { color: var(--text-muted); font-size: 17px; line-height: 1.6; }
+.adv-icon { width: 56px; height: 56px; margin: 0 auto 32px; color: var(--primary); }
+
+.anim-lock { transform: translateY(-6px); transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.adv-card.visible .anim-lock { transform: translateY(0); }
+.anim-shield { stroke-dasharray: 100; stroke-dashoffset: 100; transition: stroke-dashoffset 2s cubic-bezier(0.16, 1, 0.3, 1); }
+.adv-card.visible .anim-shield { stroke-dashoffset: 0; }
+
+.bento-section { padding: 120px 0; position: relative; z-index: 1; }
+.bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: minmax(280px, auto); gap: 24px; }
+.bento-item { padding: 40px; display: flex; flex-direction: column; justify-content: flex-start; }
+.bento-item:hover { transform: scale(1.02); }
+.bento-large { grid-column: span 2; grid-row: span 2; }
+.bento-wide { grid-column: span 3; flex-direction: row; align-items: center; gap: 40px; }
+.bento-wide-content { max-width: 600px; }
+.bento-item h3 { font-size: 28px; margin-bottom: 16px; letter-spacing: -0.5px; }
+.bento-item p { color: var(--text-muted); font-size: 17px; line-height: 1.6; }
+.bento-large h3 { font-size: 36px; }
+
+/* =========================================
+   CTA И ФУТЕР
+========================================= */
+.cta-section { padding: 40px 0 120px; position: relative; z-index: 1; }
+.cta-box { background: #0a0a0a; color: white; border-radius: 40px; padding: 80px 40px; text-align: center; box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.4); border: 1px solid rgba(255,255,255,0.1); }
+.cta-box h2 { font-size: 52px; letter-spacing: -1.5px; margin-bottom: 24px; font-weight: 700;}
+.cta-box p { font-size: 22px; color: #a0a0a5; margin-bottom: 48px; max-width: 600px; margin-left: auto; margin-right: auto;}
+.btn-premium { display: inline-block; background: white; color: black; padding: 18px 40px; border-radius: 100px; font-weight: 600; font-size: 17px; text-decoration: none; transition: all 0.3s ease; }
+.btn-premium:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(255,255,255,0.2); }
+
+.fade-up { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+footer { padding: 60px 0; border-top: 1px solid rgba(0,0,0,0.05); text-align: center; color: var(--text-muted); font-size: 14px; position: relative; z-index: 1;}
+.footer-logo { margin-bottom: 16px; display: inline-block;}
+.fade-in { opacity: 0; animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+@keyframes fadeIn { to { opacity: 1; transform: translateY(0); } 0% { opacity: 0; transform: translateY(20px);} }
+
+@media (max-width: 1000px) {
+    .bento-grid { grid-template-columns: 1fr; }
+    .bento-large, .bento-wide { grid-column: span 1; grid-row: auto; }
+    .bento-wide { flex-direction: column; text-align: left; }
+    .scroll-presentation { flex-direction: column; gap: 40px;}
+    .scroll-visual { position: relative; top: 0; height: 500px; width: 100%; margin-top: 20px; }
+    .feature-block { min-height: auto; margin-bottom: 60px; opacity: 1; transform: none;}
+    .hero h1 { font-size: 48px; }
+    .glass-surface__content { padding: 0 24px; }
+    .nav-links { display: none; }
+}

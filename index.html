@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KNX Ecosystem</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Анимированный премиум-фон -->
+    <div class="aurora-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Шапка с эффектом Glass Surface и правильной ссылкой на фильтр -->
+    <header id="glass-header" class="glass-surface glass-surface--svg" style="--filter-url: url(#glass-filter);">
+        
+        <!-- Встроенный SVG фильтр -->
+        <svg class="glass-surface__filter" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <filter id="glass-filter" color-interpolation-filters="sRGB" x="0%" y="0%" width="100%" height="100%">
+                    <feImage id="fe-glass-map" x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" result="map" />
+                    <feDisplacementMap id="redchannel" in="SourceGraphic" in2="map" result="dispRed" scale="-180" xChannelSelector="R" yChannelSelector="G" />
+                    <feColorMatrix in="dispRed" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="red" />
+                    <feDisplacementMap id="greenchannel" in="SourceGraphic" in2="map" result="dispGreen" scale="-170" xChannelSelector="R" yChannelSelector="G" />
+                    <feColorMatrix in="dispGreen" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="green" />
+                    <feDisplacementMap id="bluechannel" in="SourceGraphic" in2="map" result="dispBlue" scale="-160" xChannelSelector="R" yChannelSelector="G" />
+                    <feColorMatrix in="dispBlue" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="blue" />
+                    <feBlend in="red" in2="green" mode="screen" result="rg" />
+                    <feBlend in="rg" in2="blue" mode="screen" result="output" />
+                    <feGaussianBlur id="gaussianBlur" in="output" stdDeviation="0.7" />
+                </filter>
+            </defs>
+        </svg>
+
+        <div class="glass-surface__content">
+            <div class="logo">KNX</div>
+            <nav class="nav-links">
+                <a href="#about">О проекте</a>
+                <a href="#features">Интерфейс</a>
+                <a href="#advantages">Безопасность</a>
+                <a href="#ecosystem">Экосистема</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Главный экран -->
+    <section class="hero" id="about">
+        <div class="container hero-content fade-in">
+            <div class="hero-badge">Экосистема нового поколения</div>
+            <h1>Безупречное общение.</h1>
+            <p>Минималистичный, молниеносный и абсолютно безопасный инструмент, созданный для тех, кто ценит эстетику и приватность.</p>
+        </div>
+    </section>
+
+    <!-- Секция скролла и чата -->
+    <section id="features" class="scroll-presentation container">
+        <div class="scroll-text">
+            <div class="feature-block" data-msg-trigger="1">
+                <h2>Чистый фокус</h2>
+                <p>Мы убрали визуальный шум. Строгие линии и идеальная типографика позволяют сосредоточиться на самом важном — ваших идеях.</p>
+            </div>
+            <div class="feature-block" data-msg-trigger="2">
+                <h2>Мгновенная синхронизация</h2>
+                <p>Ваши файлы, проекты и диалоги всегда под рукой. Экосистема KNX обеспечивает бесшовный доступ к данным за миллисекунды.</p>
+            </div>
+            <div class="feature-block" data-msg-trigger="3">
+                <h2>Темная эстетика</h2>
+                <p>Глубокие оттенки и продуманный контраст. Интерфейс, который не утомляет глаза даже после долгих часов работы.</p>
+            </div>
+        </div>
+
+        <div class="scroll-visual">
+            <div class="chat-mockup">
+                <div class="chat-mac-dots">
+                    <span></span><span></span><span></span>
+                </div>
+                <div class="chat-header">
+                    <div class="avatar-circle header-avatar">И</div>
+                    <div>
+                        <div class="chat-name">Илья (KNX)</div>
+                        <div class="chat-status">в сети</div>
+                    </div>
+                </div>
+                <div class="chat-body">
+                    <div class="msg-row left" id="msg-1">
+                        <div class="avatar-circle small-avatar">А</div>
+                        <div class="msg">Дизайн выглядит потрясающе. Как скорость?</div>
+                    </div>
+                    <div class="msg-row right" id="msg-2">
+                        <div class="msg">Летает. Оптимизировали передачу тяжелых файлов.</div>
+                    </div>
+                    <div class="msg-row left" id="msg-3">
+                        <div class="avatar-circle small-avatar">А</div>
+                        <div class="msg">Отлично. Готовим релиз экосистемы?</div>
+                    </div>
+                    <div class="msg-row right" id="msg-4">
+                        <div class="msg">Да. Финальные штрихи и запускаем 🚀</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Преимущества -->
+    <section id="advantages" class="advantages-section">
+        <div class="container">
+            <h2 class="section-title text-center fade-up">Стандарты защиты</h2>
+            <div class="advantages-grid">
+                <div class="adv-card fade-up">
+                    <div class="adv-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path class="anim-lock" d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                    </div>
+                    <h3>Шифрование AES 256</h3>
+                    <p>Алгоритм военного стандарта. Никто, даже мы, не сможем прочитать ваши переписки.</p>
+                </div>
+                <div class="adv-card fade-up">
+                    <div class="adv-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                        </svg>
+                    </div>
+                    <h3>Быстрый мессенджер</h3>
+                    <p>Мгновенная доставка данных благодаря распределенной инновационной архитектуре.</p>
+                </div>
+                <div class="adv-card fade-up">
+                    <div class="adv-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path class="anim-shield" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                    </div>
+                    <h3>Абсолютная приватность</h3>
+                    <p>От скрытия аватарки до полного запрета на поиск по ID. Ваш профиль — ваши правила.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Экосистема (Bento Grid) -->
+    <section id="ecosystem" class="bento-section">
+        <div class="container">
+            <h2 class="section-title text-center fade-up">Вся экосистема в одном месте</h2>
+            <div class="bento-grid">
+                <div class="bento-item bento-large fade-up">
+                    <h3>Безлимитное пространство</h3>
+                    <p>Забудьте о лимитах на отправку файлов. Загружайте исходники, базы данных и 4K-видео напрямую в чат. Встроенный менеджер файлов организует всё автоматически.</p>
+                </div>
+                <div class="bento-item fade-up">
+                    <h3>Аудио и видео</h3>
+                    <p>Кристально чистый звук и стабильное соединение для рабочих конференций и личных звонков.</p>
+                </div>
+                <div class="bento-item fade-up">
+                    <h3>Умные интеграции</h3>
+                    <p>Открытый API. Подключайте собственных ботов для автоматизации процессов прямо в экосистеме KNX.</p>
+                </div>
+                <div class="bento-item bento-wide fade-up">
+                    <div class="bento-wide-content">
+                        <h3>Абсолютная кроссплатформенность</h3>
+                        <p>Доступно на Windows, macOS, Linux, iOS и Android. Начните писать сообщение на компьютере в офисе и отправьте его с телефона по пути домой. Единый непрерывный опыт на всех ваших устройствах.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Финальный призыв к действию -->
+    <section class="cta-section fade-up">
+        <div class="container">
+            <div class="cta-box">
+                <h2>Готовы к новому уровню?</h2>
+                <p>Присоединяйтесь к KNX и создавайте будущее вместе с нами в безопасной среде.</p>
+                <!-- Обновленная кнопка со ссылкой на Telegram -->
+                <a href="https://t.me/KNXOFFF" target="_blank" rel="noopener noreferrer" class="btn-premium">Получить доступ</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="logo footer-logo">KNX</div>
+            <p>&copy; 2026 KNX Ecosystem. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
