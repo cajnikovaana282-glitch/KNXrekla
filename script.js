@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('glass-header');
     const feImage = document.getElementById('fe-glass-map');
 
-    // Та самая проверка из вашего React-кода, чтобы стекло не пропадало в Safari!
     function supportsSVGFilters() {
         if (typeof window === 'undefined' || typeof document === 'undefined') return false;
         const isWebkit = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
@@ -17,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return div.style.backdropFilter !== '';
     }
 
-    // Если SVG фильтры не поддерживаются, включаем ваш fallback
     if (container && !supportsSVGFilters()) {
         container.classList.remove('glass-surface--svg');
         container.classList.add('glass-surface--fallback');
@@ -29,7 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const rect = container.getBoundingClientRect();
         const actualWidth = rect.width || 1100;
         const actualHeight = rect.height || 76;
-        const borderRadius = 50;
+        
+        // ДИНАМИЧЕСКИЙ РАДИУС (Важно для адаптивности на телефонах)
+        const borderRadius = Math.min(50, actualHeight / 2);
         const borderWidth = 0.07;
         const brightness = 50;
         const opacity = 0.93;
@@ -58,11 +58,9 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const dataUrl = `data:image/svg+xml,${encodeURIComponent(svgContent)}`;
         feImage.setAttribute('href', dataUrl);
-        // Для поддержки старых версий WebKit
         feImage.setAttributeNS('http://www.w3.org/1999/xlink', 'href', dataUrl);
     }
 
-    // Настраиваем хроматические искажения (смещения)
     const distortionScale = -180;
     const redChannel = document.getElementById('redchannel');
     const greenChannel = document.getElementById('greenchannel');
@@ -113,11 +111,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         });
-    }, { rootMargin: '-40% 0px -40% 0px' });
+    }, { rootMargin: '-30% 0px -40% 0px' });
 
     featureBlocks.forEach(block => chatObserver.observe(block));
 
-    // === 3. ПОЯВЛЕНИЕ ПРЕИМУЩЕСТВ И НОВЫХ БЛОКОВ ===
+    // === 3. ПОЯВЛЕНИЕ ПРЕИМУЩЕСТВ ===
     const advCards = document.querySelectorAll('.fade-up');
     const advObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach((entry, index) => {
@@ -132,17 +130,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     advCards.forEach(card => advObserver.observe(card));
 
-    // === 4. ПРЕМИУМ-ПАРАЛЛАКС ДЛЯ ФОНА ===
+    // === 4. ПАРАЛЛАКС ДЛЯ ФОНА (Только для ПК) ===
     const blobs = document.querySelectorAll('.blob');
-    document.addEventListener('mousemove', (e) => {
-        const x = e.clientX / window.innerWidth;
-        const y = e.clientY / window.innerHeight;
-        
-        blobs.forEach((blob, index) => {
-            const speed = (index + 1) * 20;
-            const moveX = (x - 0.5) * speed;
-            const moveY = (y - 0.5) * speed;
-            blob.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    if (window.innerWidth > 900) {
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            blobs.forEach((blob, index) => {
+                const speed = (index + 1) * 20;
+                const moveX = (x - 0.5) * speed;
+                const moveY = (y - 0.5) * speed;
+                blob.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            });
         });
-    });
+    }
 });
